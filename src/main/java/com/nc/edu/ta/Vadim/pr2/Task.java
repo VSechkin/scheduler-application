@@ -1,6 +1,7 @@
-package com.nc.edu.ta.Vadim.pr1;
+package com.nc.edu.ta.Vadim.pr2;
 
 import java.io.IOException;
+
 
 public class Task {
 
@@ -14,7 +15,7 @@ public class Task {
     public Task(String title, int time) {
 
         active = false;
-        this.title = title;
+        this.title = ArrayTaskList.NAME_TASK + title ;
         this.time = time;
         this.start = time;
         this.end = time;
@@ -24,7 +25,7 @@ public class Task {
     public Task(String title, int start, int end, int repeat) {
 
         active = false;
-        this.title = title;
+        this.title = ArrayTaskList.NAME_TASK + title;
         this.start = start;
         this.end = end;
         this.repeat = repeat;
@@ -132,6 +133,8 @@ public class Task {
      * @param time must be greater than zero
      * @throws IOException When an input error occurs
      */
+
+
 
 
     public int nextTimeAfter(int time) {
