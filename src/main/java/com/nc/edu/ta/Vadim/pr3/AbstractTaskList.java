@@ -1,4 +1,4 @@
-package com.nc.edu.ta.Vadim.pr2;
+package com.nc.edu.ta.Vadim.pr3;
 
 public abstract class AbstractTaskList {
     protected int countTasks = 0;

@@ -1,4 +1,4 @@
-package com.nc.edu.ta.Vadim.pr2;
+package com.nc.edu.ta.Vadim.pr3;
 
 public class ArrayTaskList extends AbstractTaskList {
     public static final String NAME_TASK = "[EDUCTR][TA].";
@@ -41,9 +41,12 @@ public class ArrayTaskList extends AbstractTaskList {
                 if (tasks[i].equals(task)) {
                     tasks[i] = null;
                     for (int j = i; j < tasks.length; j++) {
+                        if(j + 1 == countTasks){
+                            break;
+                        }
                         tasks[j] = tasks[j + 1];
                         if (tasks[j + 1] == null) {
-                          break;
+                            break;
                         }
                     }
                     countTasks--;
@@ -54,8 +57,9 @@ public class ArrayTaskList extends AbstractTaskList {
                     this.tasks = new Task[countTasks];
                     for (int j = 0; j < tempTasks.length; j++) {
                         tasks[j] = tempTasks[j];
+
                     }
-                    break;
+                    i--;
                 }
             }
         } else {
@@ -63,11 +67,9 @@ public class ArrayTaskList extends AbstractTaskList {
         }
     }
 
-
-    
     @Override
     public Task getTask(int index) {
-        if (index < 0 && index < size()) {
+        if (index < 0) {
             throw new IllegalArgumentException("The index must be greater than zero");
         }
         for (int i = 0; i < tasks.length; i++) {
@@ -81,24 +83,24 @@ public class ArrayTaskList extends AbstractTaskList {
     @Override
     public Task[] incoming(int from, int to) {
         int count = 0;
-        for (Task task : tasks) {
-            if (task != null && task.isActive()) {
-                if ((task.getStartTime() > from && task.getEndTime() <= to) || (task.isRepeated()
-                        && (task.getStartTime() + task.getRepeatInterval()) <= to)) {
+        Task[] tempTasks = new Task[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            if (tasks[i] != null && tasks[i].isActive()) {
+                if ((tasks[i].getStartTime() > from && tasks[i].getEndTime() <= to) || (tasks[i].isRepeated()
+                        && (tasks[i].getStartTime() + tasks[i].getRepeatInterval()) <= to)) {
                     count++;
+                    tempTasks[i] = tasks[i];
                 }
             }
         }
-        Task[] tempTasks = new Task[count];
+        Task[] currentTasks = new Task[count];
         int j = 0;
-        for (int i = 0; i < tasks.length; i++) {
-            if (tasks[i] != null && tasks[i].isActive())
-                if ((tasks[i].getStartTime() > from && tasks[i].getEndTime() <= to) || (tasks[i].isRepeated()
-                        && (tasks[i].getStartTime() + tasks[i].getRepeatInterval()) <= to)) {
-                    tempTasks[i - j] = tasks[i];
-                } else j++;
-            else j++;
+        for(int i = 0; i < tempTasks.length; i++)
+        {
+            if(tempTasks[i] != null){
+                currentTasks[i - j] = tempTasks[i];
+            } else j++;
         }
-        return tempTasks;
+        return currentTasks;
     }
 }
